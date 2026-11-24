@@ -24,6 +24,12 @@ def main() -> int:
     if not text.strip():
         print("entry is blank", file=sys.stderr)
         return 1
+    if "\n" in text or "\r" in text:
+        print("entry must be a single line", file=sys.stderr)
+        return 1
+    if any(ord(ch) < 32 for ch in text):
+        print("entry contains a control character", file=sys.stderr)
+        return 1
     out_dir = "/output"
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
